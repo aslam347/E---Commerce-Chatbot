@@ -71,7 +71,9 @@ Triggered when users request products or real-time product information.
 - Shoes under Rs. 2000  
 
 ---
+# 📁 Folder Structure
 
+```text
 E-Commerce-RAG/
 │── app/
 │   │── main.py
