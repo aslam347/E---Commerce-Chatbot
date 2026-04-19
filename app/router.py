@@ -1,4 +1,6 @@
-from semantic_router import Route, RouteLayer
+# from semantic_router import Route, RouteLayer
+from semantic_router.layer import RouteLayer
+from semantic_router.route import Route
 from semantic_router.encoders import HuggingFaceEncoder
 
 encoder = HuggingFaceEncoder(
