@@ -1,5 +1,6 @@
 # =========================
 # app/sql.py
+# FIXED FOR STREAMLIT CLOUD
 # =========================
 
 from groq import Groq
@@ -12,17 +13,38 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# -------------------------
+# ENV
+# -------------------------
 GROQ_MODEL = os.getenv("GROQ_MODEL")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-# Cloud-safe DB path
-db_path = Path(__file__).resolve().parent / "db.sqlite"
+client_sql = Groq(api_key=GROQ_API_KEY)
 
-client_sql = Groq(api_key=os.getenv("GROQ_API_KEY"))
+# -------------------------
+# DATABASE PATHS
+# tries multiple paths for cloud + local
+# -------------------------
+possible_paths = [
+    Path(__file__).resolve().parent / "db.sqlite",                    # app/db.sqlite
+    Path(__file__).resolve().parent.parent / "resources" / "db.sqlite",  # resources/db.sqlite
+    Path(__file__).resolve().parent.parent / "db.sqlite"             # root/db.sqlite
+]
 
+db_path = None
+
+for path in possible_paths:
+    if path.exists():
+        db_path = path
+        break
+
+# -------------------------
+# SQL PROMPT
+# -------------------------
 sql_prompt = """
-You are an expert in generating SQLite SQL queries.
+You are expert in SQLite SQL generation.
 
-Database table name: product
+Table name: product
 
 Columns:
 product_link
@@ -39,7 +61,8 @@ Rules:
 3. Use LOWER(column)
 4. Use LIKE '%value%'
 5. Use <= not ≤
-6. Return only SQL inside <SQL></SQL>
+6. Use LIMIT 5
+7. Return ONLY SQL inside <SQL></SQL>
 
 Example:
 
@@ -52,6 +75,9 @@ LIMIT 5;
 """
 
 
+# -------------------------
+# GENERATE SQL
+# -------------------------
 def generate_sql_query(question):
     chat_completion = client_sql.chat.completions.create(
         messages=[
@@ -66,8 +92,14 @@ def generate_sql_query(question):
     return chat_completion.choices[0].message.content
 
 
+# -------------------------
+# RUN QUERY
+# -------------------------
 def run_query(query):
     try:
+        if db_path is None:
+            return "Database file not found."
+
         if query.strip().upper().startswith("SELECT"):
             with sqlite3.connect(db_path) as conn:
                 df = pd.read_sql_query(query, conn)
@@ -77,6 +109,9 @@ def run_query(query):
         return f"SQL Error: {str(e)}"
 
 
+# -------------------------
+# MAIN CHAIN
+# -------------------------
 def sql_chain(question):
     sql_query = generate_sql_query(question)
 
@@ -84,18 +119,23 @@ def sql_chain(question):
     matches = re.findall(pattern, sql_query, re.DOTALL)
 
     if not matches:
-        return "Sorry, query not generated."
+        return "Sorry, LLM could not generate SQL."
 
     query = matches[0].strip()
 
     response = run_query(query)
 
+    # If SQL failed
     if isinstance(response, str):
         return response
 
+    # Empty result
     if response is None or response.empty:
         return "No matching products found."
 
+    # -------------------------
+    # FORMAT OUTPUT
+    # -------------------------
     final_answer = ""
 
     for i, row in response.iterrows():
@@ -103,7 +143,7 @@ def sql_chain(question):
 {i+1}. {row['title']}
 
 Price: Rs. {row['price']}
-Discount: {int(row['discount'] * 100)}% off
+Discount: {int(float(row['discount']) * 100)}% off
 Rating: {row['avg_rating']}
 👉 [View Product]({row['product_link']})
 
@@ -112,6 +152,9 @@ Rating: {row['avg_rating']}
     return final_answer
 
 
+# -------------------------
+# TEST
+# -------------------------
 if __name__ == "__main__":
     question = "give shoe under 2000"
     answer = sql_chain(question)
