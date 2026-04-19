@@ -72,8 +72,6 @@ Triggered when users request products or real-time product information.
 
 ---
 
-# 📁 Folder Structure
-
 E-Commerce-RAG/
 │── app/
 │   │── main.py
@@ -95,27 +93,6 @@ E-Commerce-RAG/
 │   │── scraped_data.csv
 │
 │── README.md
-
-
-### Set-up & Execution
-
-1. Run the following command to install all dependencies. 
-
-    ```bash
-    pip install -r app/requirements.txt
-    ```
-
-1. Inside app folder, create a .env file with your GROQ credentials as follows:
-    ```text
-    GROQ_MODEL=<Add the model name, e.g. llama-3.3-70b-versatile>
-    GROQ_API_KEY=<Add your groq api key here>
-    ```
-
-1. Run the streamlit app by running the following command.
-
-    ```bash
-    streamlit run app/main.py
-    ```
 
 
 
