@@ -166,10 +166,7 @@ E-Commerce-RAG/
 │── web-scraping/
 │   │── scrape_products.py
 │   │── scraped_data.csv
-│
-│── README.md
-```text
----
+
 
 # 💡 Real Business Use Cases
 
