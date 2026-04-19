@@ -1,52 +1,90 @@
-# 💬 E-Commerce Chatbot (Gen AI RAG project using LLama3.3 and GROQ)
+# 💬 E-Commerce Chatbot (Gen AI RAG Project using Llama 3.3 + GROQ)
 
-This is POC of an intelligent chatbot tailored for an e-commerce platform, enabling seamless user interactions by accurately identifying the intent behind user queries. It leverages real-time access to the platform's database, allowing it to provide precise and up-to-date responses.
+An intelligent **AI-powered chatbot for e-commerce platforms** that helps users search products, ask FAQs, and get instant responses using **LLM + RAG + SQL Database Querying**.
+
+This project demonstrates how Generative AI can be integrated into e-commerce websites to improve customer experience through smart automation.
+
+---
+
+# 🌐 Live Demo App
+
+🚀 Try the chatbot here:
+
+👉 **Streamlit Live App**  
+https://e---commerce-chatbot-mohamed-aslam.streamlit.app/
+
+---
 
 # 🎥 Project Explanation Video
 
-Watch full Loom demo and explanation of this project here:
+Watch the complete Loom demo and explanation of this project:
 
-[▶️ Watch Loom Video](https://www.loom.com/share/4c4b5e7447c540f695e395d0ff441f22)
+👉 **Loom Video**  
+https://www.loom.com/share/4c4b5e7447c540f695e395d0ff441f22
 
+---
 
-Folder structure
-1. app: All the code for chatbot
-2. web-scraping: Code to scrap e-commerce website 
+# 📌 Project Overview
 
-This chatbot currently supports two intents:
+This chatbot currently supports **two main intents**:
 
-- **faq**: Triggered when users ask questions related to the platform's policies or general information. eg. Is online payment available?
-- **sql**: Activated when users request product listings or information based on real-time database queries. eg. Show me all nike shoes below Rs. 3000.
+### ✅ FAQ Intent
 
+Handles customer support questions like:
 
-![product screenshot](resources/product-ss.png)
+- Return policy  
+- Refund process  
+- Payment methods  
+- Shipping details  
+- Promo code usage  
+- Damaged product help
 
+### ✅ SQL Intent
 
-## Architecture
-![architecture diagram of the e-commerce chatbot](resources/architecture-diagram.png)
+Handles product search requests directly from database:
 
+- Shoes under ₹2000  
+- Nike shoes below ₹3000  
+- Top-rated running shoes  
+- Puma shoes with discount  
+- Women sports shoes  
+- Cheapest branded shoes
 
+---
+
+# 🧠 Tech Stack
+
+- **Python**
+- **Streamlit**
+- **Groq API**
+- **Llama 3.3**
+- **SQLite**
+- **ChromaDB**
+- **Sentence Transformers**
+- **Semantic Router**
+- **Pandas**
+
+---
 
 # 🚀 Key Features
 
-✅ Intelligent query understanding  
-✅ Detects user intent automatically  
-✅ FAQ support (refund, payment, shipping, return policy)  
-✅ Product search using natural language  
+✅ Intelligent user query understanding  
+✅ Automatic intent detection  
+✅ FAQ chatbot with RAG pipeline  
+✅ Natural language product search  
 ✅ Real-time SQL database querying  
+✅ Product links with price/rating/discount  
 ✅ Fast LLM responses using GROQ  
-✅ Premium Streamlit UI  
+✅ Clean premium Streamlit UI  
 ✅ Beginner-friendly Gen AI architecture  
 
 ---
 
 # 🧠 Supported Intents
 
-This chatbot currently supports **two main intents**:
+# 1️⃣ FAQ Intent
 
-## 1️⃣ FAQ Intent
-
-Triggered when users ask questions related to policies or general information.
+Triggered when users ask policy or support questions.
 
 ### Examples:
 
@@ -55,20 +93,55 @@ Triggered when users ask questions related to policies or general information.
 - What is return policy?  
 - Do you offer international shipping?  
 - How to use promo code?  
+- Can I cancel my order?  
 
 ---
 
-## 2️⃣ SQL Intent
+# 2️⃣ SQL Intent
 
-Triggered when users request products or real-time product information.
+Triggered when users search products.
 
 ### Examples:
 
-- Show me all Nike shoes below Rs. 3000  
+- Show me Nike shoes below Rs. 3000  
 - Puma shoes with discount  
-- Formal shoes size 9  
-- Top rated running shoes  
 - Shoes under Rs. 2000  
+- Top rated running shoes  
+- Women sports shoes  
+- Cheapest shoes available  
+
+---
+
+# 📷 Project Screenshots
+
+## Product Search Output
+
+![product screenshot](resources/product-ss.png)
+
+---
+
+## Architecture Diagram
+
+![architecture diagram](resources/architecture-diagram.png)
+
+---
+
+# 🏗️ Architecture Flow
+
+```text
+User Query
+   ↓
+Intent Detection (Semantic Router)
+   ↓
+ ┌───────────────┬──────────────┐
+ │               │              │
+FAQ Route      SQL Route
+ │               │
+RAG Search     Generate SQL Query
+ │               │
+LLM Answer     SQLite Database
+ │               │
+ └────── Final Chatbot Response ──────┘
 
 ---
 # 📁 Folder Structure
