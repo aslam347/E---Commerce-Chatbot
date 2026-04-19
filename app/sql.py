@@ -5,42 +5,72 @@ import sqlite3
 import pandas as pd
 from pathlib import Path
 from dotenv import load_dotenv
-from pandas import DataFrame
 
 load_dotenv()
 
+# -------------------------------
+# ENV VARIABLES
+# -------------------------------
 GROQ_MODEL = os.getenv("GROQ_MODEL")
-
-# only fix path issue
-db_path = Path(__file__).resolve().parent.parent / "db.sqlite"
-
 client_sql = Groq()
 
-sql_prompt = """You are an expert in understanding the database schema and generating SQL queries for a natural language question asked
-pertaining to the data you have. The schema is provided in the schema tags. 
-<schema> 
-table: product 
+# -------------------------------
+# DATABASE PATH
+# -------------------------------
+db_path = Path(__file__).parent / "db.sqlite"
 
-fields: 
-product_link - string (hyperlink to product)
-title - string (name of the product)
-brand - string (brand of the product)
-price - integer (price of the product in Indian Rupees)
-discount - float (discount on the product. 10 percent discount is represented as 0.1, 20 percent as 0.2, and such.)
-avg_rating - float (average rating of the product. Range 0-5, 5 is the highest.)
-total_ratings - integer (total number of ratings for the product)
+# -------------------------------
+# PROMPT
+# -------------------------------
+sql_prompt = """
+You are an expert SQLite query generator.
 
-</schema>
+Database Name: db.sqlite
 
-Make sure whenever you try to search for the brand name, the name can be in any case.
-So, make sure to use LIKE with LOWER(brand). Never use ILIKE.
+Table Name: product
 
-Create a single SQL query for the question provided.
-The query should have all the fields in SELECT clause (i.e. SELECT *)
+Columns:
+product_link TEXT
+title TEXT
+brand TEXT
+price INTEGER
+discount REAL
+avg_rating REAL
+total_ratings INTEGER
 
-Just the SQL query is needed, nothing more.
-Always provide the SQL in between the <SQL></SQL> tags."""
+Rules:
+1. Use ONLY SQLite syntax
+2. Table name is product
+3. Use SELECT *
+4. Use LIKE for text search
+5. Never use ILIKE
+6. Return only SQL query inside <SQL></SQL>
 
+Examples:
+
+User: give shoe under 2000
+
+<SQL>
+SELECT * FROM product
+WHERE LOWER(title) LIKE '%shoe%'
+AND price <= 2000
+LIMIT 5;
+</SQL>
+
+User: give nike shoe under 5000
+
+<SQL>
+SELECT * FROM product
+WHERE LOWER(brand) LIKE '%nike%'
+AND LOWER(title) LIKE '%shoe%'
+AND price <= 5000
+LIMIT 5;
+</SQL>
+"""
+
+# -------------------------------
+# GENERATE SQL
+# -------------------------------
 def generate_sql_query(question):
     chat_completion = client_sql.chat.completions.create(
         messages=[
@@ -49,16 +79,31 @@ def generate_sql_query(question):
         ],
         model=GROQ_MODEL,
         temperature=0.2,
-        max_tokens=1024
+        max_tokens=500
     )
+
     return chat_completion.choices[0].message.content
 
-def run_query(query):
-    if query.strip().upper().startswith("SELECT"):
-        with sqlite3.connect(db_path) as conn:
-            df = pd.read_sql_query(query, conn)
-            return df.head(5)
 
+# -------------------------------
+# RUN QUERY
+# -------------------------------
+def run_query(query):
+    try:
+        if query.strip().upper().startswith("SELECT"):
+            with sqlite3.connect(db_path) as conn:
+                df = pd.read_sql_query(query, conn)
+                return df.head(5)
+
+    except Exception as e:
+        return f"SQL Error: {str(e)}"
+
+    return None
+
+
+# -------------------------------
+# MAIN SQL CHAIN
+# -------------------------------
 def sql_chain(question):
     sql_query = generate_sql_query(question)
 
@@ -66,9 +111,17 @@ def sql_chain(question):
     matches = re.findall(pattern, sql_query, re.DOTALL)
 
     if not matches:
-        return "Sorry, LLM is not able to generate a query for your question"
+        return "Sorry, unable to generate SQL query."
 
-    response = run_query(matches[0].strip())
+    query = matches[0].strip()
+
+    print("Generated SQL:")
+    print(query)
+
+    response = run_query(query)
+
+    if isinstance(response, str):
+        return response
 
     if response is None or response.empty:
         return "No matching products found."
@@ -85,9 +138,14 @@ Rating: {row['avg_rating']}
 👉 [View Product]({row['product_link']})
 
 """
+
     return final_answer
 
+
+# -------------------------------
+# TEST
+# -------------------------------
 if __name__ == "__main__":
-    question = "Show top 3 shoes in descending order of rating"
+    question = "give nike shoe under 5000"
     answer = sql_chain(question)
     print(answer)
