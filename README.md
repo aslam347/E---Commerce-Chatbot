@@ -168,7 +168,7 @@ E-Commerce-RAG/
 │   │── scraped_data.csv
 │
 │── README.md
-
+```text
 ---
 
 # 💡 Real Business Use Cases
