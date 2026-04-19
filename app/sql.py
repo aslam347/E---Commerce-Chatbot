@@ -1,3 +1,7 @@
+# =========================
+# app/sql.py
+# =========================
+
 from groq import Groq
 import os
 import re
@@ -8,47 +12,36 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# -------------------------------
-# ENV VARIABLES
-# -------------------------------
 GROQ_MODEL = os.getenv("GROQ_MODEL")
-client_sql = Groq()
 
-# -------------------------------
-# DATABASE PATH
-# -------------------------------
-db_path = Path(__file__).parent / "db.sqlite"
+# Cloud-safe DB path
+db_path = Path(__file__).resolve().parent / "db.sqlite"
 
-# -------------------------------
-# PROMPT
-# -------------------------------
+client_sql = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
 sql_prompt = """
-You are an expert SQLite query generator.
+You are an expert in generating SQLite SQL queries.
 
-Database Name: db.sqlite
-
-Table Name: product
+Database table name: product
 
 Columns:
-product_link TEXT
-title TEXT
-brand TEXT
-price INTEGER
-discount REAL
-avg_rating REAL
-total_ratings INTEGER
+product_link
+title
+brand
+price
+discount
+avg_rating
+total_ratings
 
 Rules:
-1. Use ONLY SQLite syntax
-2. Table name is product
-3. Use SELECT *
-4. Use LIKE for text search
-5. Never use ILIKE
-6. Return only SQL query inside <SQL></SQL>
+1. Use SQLite syntax only
+2. Use SELECT *
+3. Use LOWER(column)
+4. Use LIKE '%value%'
+5. Use <= not ≤
+6. Return only SQL inside <SQL></SQL>
 
-Examples:
-
-User: give shoe under 2000
+Example:
 
 <SQL>
 SELECT * FROM product
@@ -56,21 +49,9 @@ WHERE LOWER(title) LIKE '%shoe%'
 AND price <= 2000
 LIMIT 5;
 </SQL>
-
-User: give nike shoe under 5000
-
-<SQL>
-SELECT * FROM product
-WHERE LOWER(brand) LIKE '%nike%'
-AND LOWER(title) LIKE '%shoe%'
-AND price <= 5000
-LIMIT 5;
-</SQL>
 """
 
-# -------------------------------
-# GENERATE SQL
-# -------------------------------
+
 def generate_sql_query(question):
     chat_completion = client_sql.chat.completions.create(
         messages=[
@@ -79,15 +60,12 @@ def generate_sql_query(question):
         ],
         model=GROQ_MODEL,
         temperature=0.2,
-        max_tokens=500
+        max_tokens=1024
     )
 
     return chat_completion.choices[0].message.content
 
 
-# -------------------------------
-# RUN QUERY
-# -------------------------------
 def run_query(query):
     try:
         if query.strip().upper().startswith("SELECT"):
@@ -98,12 +76,7 @@ def run_query(query):
     except Exception as e:
         return f"SQL Error: {str(e)}"
 
-    return None
 
-
-# -------------------------------
-# MAIN SQL CHAIN
-# -------------------------------
 def sql_chain(question):
     sql_query = generate_sql_query(question)
 
@@ -111,12 +84,9 @@ def sql_chain(question):
     matches = re.findall(pattern, sql_query, re.DOTALL)
 
     if not matches:
-        return "Sorry, unable to generate SQL query."
+        return "Sorry, query not generated."
 
     query = matches[0].strip()
-
-    print("Generated SQL:")
-    print(query)
 
     response = run_query(query)
 
@@ -142,10 +112,7 @@ Rating: {row['avg_rating']}
     return final_answer
 
 
-# -------------------------------
-# TEST
-# -------------------------------
 if __name__ == "__main__":
-    question = "give nike shoe under 5000"
+    question = "give shoe under 2000"
     answer = sql_chain(question)
     print(answer)
