@@ -142,7 +142,8 @@ RAG Search     Generate SQL Query
 LLM Answer     SQLite Database
  │               │
  └────── Final Chatbot Response ──────┘
-
+---------------------------------
+-------------------------------
 ---
 
 # 💡 Real Business Use Cases
