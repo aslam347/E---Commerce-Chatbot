@@ -1,8 +1,3 @@
-# =========================
-# app/sql.py
-# FIXED FOR STREAMLIT CLOUD
-# =========================
-
 from groq import Groq
 import os
 import re
@@ -10,81 +5,52 @@ import sqlite3
 import pandas as pd
 from pathlib import Path
 from dotenv import load_dotenv
+from pandas import DataFrame
 
 load_dotenv()
 
-# -------------------------
-# ENV
-# -------------------------
-GROQ_MODEL = os.getenv("GROQ_MODEL")
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+GROQ_MODEL = os.getenv('GROQ_MODEL')
 
-client_sql = Groq(api_key=GROQ_API_KEY)
+db_path = Path(__file__).parent / "db.sqlite"
 
-# -------------------------
-# DATABASE PATHS
-# tries multiple paths for cloud + local
-# -------------------------
-possible_paths = [
-    Path(__file__).resolve().parent / "db.sqlite",                    # app/db.sqlite
-    Path(__file__).resolve().parent.parent / "resources" / "db.sqlite",  # resources/db.sqlite
-    Path(__file__).resolve().parent.parent / "db.sqlite"             # root/db.sqlite
-]
+client_sql = Groq()
 
-db_path = None
+sql_prompt = """You are an expert in understanding the database schema and generating SQL queries for a natural language question asked
+pertaining to the data you have. The schema is provided in the schema tags. 
+<schema> 
+table: product 
 
-for path in possible_paths:
-    if path.exists():
-        db_path = path
-        break
+fields: 
+product_link - string (hyperlink to product)	
+title - string (name of the product)	
+brand - string (brand of the product)	
+price - integer (price of the product in Indian Rupees)	
+discount - float (discount on the product. 10 percent discount is represented as 0.1, 20 percent as 0.2, and such.)	
+avg_rating - float (average rating of the product. Range 0-5, 5 is the highest.)	
+total_ratings - integer (total number of ratings for the product)
 
-# -------------------------
-# SQL PROMPT
-# -------------------------
-sql_prompt = """
-You are expert in SQLite SQL generation.
+</schema>
+Make sure whenever you try to search for the brand name, the name can be in any case. 
+So, make sure to use %LIKE% to find the brand in condition. Never use "ILIKE". 
+Create a single SQL query for the question provided. 
+The query should have all the fields in SELECT clause (i.e. SELECT *)
 
-Table name: product
-
-Columns:
-product_link
-title
-brand
-price
-discount
-avg_rating
-total_ratings
-
-Rules:
-1. Use SQLite syntax only
-2. Use SELECT *
-3. Use LOWER(column)
-4. Use LIKE '%value%'
-5. Use <= not ≤
-6. Use LIMIT 5
-7. Return ONLY SQL inside <SQL></SQL>
-
-Example:
-
-<SQL>
-SELECT * FROM product
-WHERE LOWER(title) LIKE '%shoe%'
-AND price <= 2000
-LIMIT 5;
-</SQL>
-"""
+Just the SQL query is needed, nothing more. Always provide the SQL in between the <SQL></SQL> tags."""
 
 
-# -------------------------
-# GENERATE SQL
-# -------------------------
 def generate_sql_query(question):
     chat_completion = client_sql.chat.completions.create(
         messages=[
-            {"role": "system", "content": sql_prompt},
-            {"role": "user", "content": question}
+            {
+                "role": "system",
+                "content": sql_prompt,
+            },
+            {
+                "role": "user",
+                "content": question,
+            }
         ],
-        model=GROQ_MODEL,
+        model=os.environ['GROQ_MODEL'],
         temperature=0.2,
         max_tokens=1024
     )
@@ -92,50 +58,29 @@ def generate_sql_query(question):
     return chat_completion.choices[0].message.content
 
 
-# -------------------------
-# RUN QUERY
-# -------------------------
 def run_query(query):
-    try:
-        if db_path is None:
-            return "Database file not found."
-
-        if query.strip().upper().startswith("SELECT"):
-            with sqlite3.connect(db_path) as conn:
-                df = pd.read_sql_query(query, conn)
-                return df.head(5)
-
-    except Exception as e:
-        return f"SQL Error: {str(e)}"
+    if query.strip().upper().startswith('SELECT'):
+        with sqlite3.connect(db_path) as conn:
+            df = pd.read_sql_query(query, conn)
+            return df.head(5)
 
 
-# -------------------------
-# MAIN CHAIN
-# -------------------------
 def sql_chain(question):
     sql_query = generate_sql_query(question)
 
-    pattern = r"<SQL>(.*?)</SQL>"
+    pattern = "<SQL>(.*?)</SQL>"
     matches = re.findall(pattern, sql_query, re.DOTALL)
 
-    if not matches:
-        return "Sorry, LLM could not generate SQL."
+    if len(matches) == 0:
+        return "Sorry, LLM is not able to generate a query for your question"
 
-    query = matches[0].strip()
+    print(matches[0].strip())
 
-    response = run_query(query)
+    response = run_query(matches[0].strip())
 
-    # If SQL failed
-    if isinstance(response, str):
-        return response
-
-    # Empty result
     if response is None or response.empty:
         return "No matching products found."
 
-    # -------------------------
-    # FORMAT OUTPUT
-    # -------------------------
     final_answer = ""
 
     for i, row in response.iterrows():
@@ -143,7 +88,7 @@ def sql_chain(question):
 {i+1}. {row['title']}
 
 Price: Rs. {row['price']}
-Discount: {int(float(row['discount']) * 100)}% off
+Discount: {int(row['discount'] * 100)}% off
 Rating: {row['avg_rating']}
 👉 [View Product]({row['product_link']})
 
@@ -152,10 +97,7 @@ Rating: {row['avg_rating']}
     return final_answer
 
 
-# -------------------------
-# TEST
-# -------------------------
 if __name__ == "__main__":
-    question = "give shoe under 2000"
+    question = "Show top 3 shoes in descending order of rating"
     answer = sql_chain(question)
     print(answer)
