@@ -1,0 +1,197 @@
+/* =============== ⚡ PREMIUM FUTURISTIC E-COMMERCE UI ⚡ =============== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Orbitron:wght@500;700;800&display=swap');
+
+/* ================= GLOBAL ================= */
+
+html, body, [class*="css"] {
+    font-family: 'Poppins', sans-serif;
+    color: #f8fafc !important;
+    margin: 0;
+    padding: 0;
+}
+
+/* ================= FULL BACKGROUND ================= */
+
+html, body, .stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stHeader"],
+[data-testid="stToolbar"],
+header,
+footer,
+.main,
+.block-container,
+section.main,
+div[data-testid="stBottomBlockContainer"],
+div[data-testid="stDecoration"],
+div[data-testid="stStatusWidget"] {
+
+    background:
+    radial-gradient(circle at top left, rgba(56,189,248,0.20), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(147,51,234,0.20), transparent 25%),
+    linear-gradient(135deg, #020617 0%, #0f172a 45%, #1e1b4b 100%) !important;
+}
+
+/* remove top white line */
+header {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* remove spacing */
+[data-testid="stAppViewContainer"] {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* ================= MAIN CONTAINER ================= */
+
+.block-container {
+    max-width: 1180px;
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+}
+
+/* ================= TITLE ================= */
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #93c5fd !important;
+    text-shadow:
+        0 0 20px rgba(59,130,246,0.7),
+        0 0 50px rgba(147,51,234,0.5);
+    margin-bottom: 2rem !important;
+}
+
+/* ================= CHAT BOX ================= */
+
+[data-testid="stChatMessage"] {
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 24px !important;
+    padding: 24px !important;
+    backdrop-filter: blur(18px);
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.45),
+        inset 0 0 12px rgba(99,102,241,0.18);
+    transition: 0.35s ease;
+}
+
+[data-testid="stChatMessage"]:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow:
+        0 20px 45px rgba(147,51,234,0.22),
+        inset 0 0 16px rgba(56,189,248,0.25);
+}
+
+/* ================= CHAT TEXT ================= */
+
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] li,
+[data-testid="stMarkdownContainer"] span {
+    color: #f8fafc !important;
+    font-size: 1.08rem !important;
+    line-height: 1.8 !important;
+}
+
+strong {
+    color: #38bdf8 !important;
+}
+
+/* ================= AVATAR ================= */
+
+[data-testid="stChatMessageAvatarUser"] {
+    filter: drop-shadow(0 0 12px rgba(236,72,153,.6));
+}
+
+[data-testid="stChatMessageAvatarAssistant"] {
+    filter: drop-shadow(0 0 12px rgba(56,189,248,.6));
+}
+
+/* ================= INPUT BOX ================= */
+
+.stChatInputContainer {
+    background: rgba(15,23,42,0.95) !important;
+    border: 1px solid rgba(255,255,255,0.10) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,.35);
+    padding: 6px !important;
+}
+
+/* typing text black */
+textarea,
+textarea:focus,
+textarea:active,
+textarea[data-testid="stChatInputTextArea"] {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    font-size: 1.05rem !important;
+    background: transparent !important;
+}
+
+/* placeholder */
+textarea::placeholder {
+    color: rgba(255,255,255,0.45) !important;
+}
+
+/* focus glow */
+.stChatInputContainer:focus-within {
+    border: 1px solid rgba(56,189,248,0.6) !important;
+    box-shadow:
+        0 0 20px rgba(56,189,248,0.25),
+        0 0 35px rgba(147,51,234,0.18);
+}
+
+/* ================= SEND BUTTON ================= */
+
+button[kind="primary"] {
+    background: linear-gradient(135deg,#2563eb,#7c3aed,#ec4899) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 14px !important;
+    transition: .3s ease;
+    font-weight: 700 !important;
+}
+
+button[kind="primary"]:hover {
+    transform: scale(1.08);
+    box-shadow:
+        0 0 20px rgba(59,130,246,.55),
+        0 0 35px rgba(147,51,234,.35);
+}
+
+/* ================= LINKS ================= */
+
+a {
+    color: #38bdf8 !important;
+    font-weight: 700;
+    text-decoration: none !important;
+}
+
+a:hover {
+    color: #ec4899 !important;
+}
+
+/* ================= SCROLLBAR ================= */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(#2563eb,#7c3aed,#ec4899);
+    border-radius: 10px;
+}
+
+/* ================= ALERT ================= */
+
+[data-testid="stAlert"] {
+    background: rgba(15,23,42,.85) !important;
+    border: 1px solid rgba(56,189,248,.25);
+    border-radius: 18px !important;
+    color: white !important;
+}
