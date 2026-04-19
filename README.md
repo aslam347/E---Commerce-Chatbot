@@ -169,9 +169,47 @@ E-Commerce-RAG/
 │
 │── README.md
 
+---
 
+# 💡 Real Business Use Cases
+
+This project can be applied to multiple real-world business scenarios, including:
+
+- ✅ E-commerce customer support automation  
+- ✅ AI shopping assistant  
+- ✅ Smart product recommendation engine  
+- ✅ FAQ resolution bot  
+- ✅ Order support chatbot  
+- ✅ Conversational commerce assistant  
+
+---
+
+# 🙌 Author
+
+## Mohamed Aslam
+
+Passionate about:
+
+- Data Science  
+- Generative AI  
+- AI Agents  
+- Real-world AI products  
+
+---
+
+# ⭐ If You Like This Project
+
+If you found this project useful, please give this repository a **star ⭐ on GitHub**.
+
+---
+
+# 📜 License
 
 Copyright (C) Codebasics Inc. All rights reserved.
 
-Additional Terms: This software is licensed under the MIT License. However, commercial use of this software is strictly prohibited without prior written permission from the author. Attribution must be given in all copies or substantial portions of the software.
+## Additional Terms
 
+This software is licensed under the **MIT License**. However:
+
+- Commercial use of this software is strictly prohibited without prior written permission from the author.  
+- Attribution must be given in all copies or substantial portions of the software.  
