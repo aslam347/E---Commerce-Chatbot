@@ -169,7 +169,9 @@ E-Commerce-RAG/
 │
 │── README.md
 
-# 💡 Real Business Use Cases
+
+
+ 💡 Real Business Use Cases
 
 This project can be applied to multiple real-world business scenarios, including:
 
