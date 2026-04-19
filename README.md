@@ -2,6 +2,13 @@
 
 This is POC of an intelligent chatbot tailored for an e-commerce platform, enabling seamless user interactions by accurately identifying the intent behind user queries. It leverages real-time access to the platform's database, allowing it to provide precise and up-to-date responses.
 
+# 🎥 Project Explanation Video
+
+Watch full Loom demo and explanation of this project here:
+
+[▶️ Watch Loom Video](https://www.loom.com/share/4c4b5e7447c540f695e395d0ff441f22)
+
+
 Folder structure
 1. app: All the code for chatbot
 2. web-scraping: Code to scrap e-commerce website 
@@ -89,6 +96,9 @@ E-Commerce-RAG/
 │   │── scraped_data.csv
 │
 │── README.md
+
+
+
 
 
 ### Set-up & Execution
