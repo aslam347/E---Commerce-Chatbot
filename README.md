@@ -184,9 +184,9 @@ This project can be applied to multiple real-world business scenarios, including
 
 ---
 
-# 🙌 Author
+ 🙌 Author
 
-## Mohamed Aslam
+ Mohamed Aslam
 
 Passionate about:
 
@@ -197,17 +197,17 @@ Passionate about:
 
 ---
 
-# ⭐ If You Like This Project
+ ⭐ If You Like This Project
 
 If you found this project useful, please give this repository a **star ⭐ on GitHub**.
 
 ---
 
-# 📜 License
+ 📜 License
 
 Copyright (C) Codebasics Inc. All rights reserved.
 
-## Additional Terms
+ Additional Terms
 
 This software is licensed under the **MIT License**. However:
 
