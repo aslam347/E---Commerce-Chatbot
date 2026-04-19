@@ -97,9 +97,7 @@ E-Commerce-RAG/
 │
 │── README.md
 
-
-
-
+---
 
 ### Set-up & Execution
 
@@ -121,7 +119,7 @@ E-Commerce-RAG/
     streamlit run app/main.py
     ```
 
----
+
 
 Copyright (C) Codebasics Inc. All rights reserved.
 
