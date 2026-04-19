@@ -144,29 +144,6 @@ LLM Answer     SQLite Database
  └────── Final Chatbot Response ──────┘
 
 ---
-# 📁 Folder Structure
-
-```text
-E-Commerce-RAG/
-│── app/
-│   │── main.py
-│   │── faq.py
-│   │── sql.py
-│   │── router.py
-│   │── style.css
-│   │── db.sqlite
-│   │── .env
-│   │── requirements.txt
-│
-│── resources/
-│   │── faq_data.csv
-│   │── product-ss.png
-│   │── architecture-diagram.png
-│
-│── web-scraping/
-│   │── scrape_products.py
-│   │── scraped_data.csv
-
 
 # 💡 Real Business Use Cases
 
