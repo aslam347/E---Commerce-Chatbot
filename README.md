@@ -1,4 +1,4 @@
-# 💬 e-commerce chatbot (Gen AI RAG project using LLama3.3 and GROQ)
+# 💬 E-Commerce Chatbot (Gen AI RAG project using LLama3.3 and GROQ)
 
 This is POC of an intelligent chatbot tailored for an e-commerce platform, enabling seamless user interactions by accurately identifying the intent behind user queries. It leverages real-time access to the platform's database, allowing it to provide precise and up-to-date responses.
 
@@ -17,6 +17,78 @@ This chatbot currently supports two intents:
 
 ## Architecture
 ![architecture diagram of the e-commerce chatbot](resources/architecture-diagram.png)
+
+
+
+# 🚀 Key Features
+
+✅ Intelligent query understanding  
+✅ Detects user intent automatically  
+✅ FAQ support (refund, payment, shipping, return policy)  
+✅ Product search using natural language  
+✅ Real-time SQL database querying  
+✅ Fast LLM responses using GROQ  
+✅ Premium Streamlit UI  
+✅ Beginner-friendly Gen AI architecture  
+
+---
+
+# 🧠 Supported Intents
+
+This chatbot currently supports **two main intents**:
+
+## 1️⃣ FAQ Intent
+
+Triggered when users ask questions related to policies or general information.
+
+### Examples:
+
+- Is online payment available?  
+- How can I get refund?  
+- What is return policy?  
+- Do you offer international shipping?  
+- How to use promo code?  
+
+---
+
+## 2️⃣ SQL Intent
+
+Triggered when users request products or real-time product information.
+
+### Examples:
+
+- Show me all Nike shoes below Rs. 3000  
+- Puma shoes with discount  
+- Formal shoes size 9  
+- Top rated running shoes  
+- Shoes under Rs. 2000  
+
+---
+
+# 📁 Folder Structure
+
+```text
+E-Commerce-RAG/
+│── app/
+│   │── main.py
+│   │── faq.py
+│   │── sql.py
+│   │── router.py
+│   │── style.css
+│   │── db.sqlite
+│   │── .env
+│   │── requirements.txt
+│
+│── resources/
+│   │── faq_data.csv
+│   │── product-ss.png
+│   │── architecture-diagram.png
+│
+│── web-scraping/
+│   │── scrape_products.py
+│   │── scraped_data.csv
+│
+│── README.md
 
 
 ### Set-up & Execution
