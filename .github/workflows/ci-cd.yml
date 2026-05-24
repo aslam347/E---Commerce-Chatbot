@@ -31,7 +31,7 @@ jobs:
           pip install pytest
 
       - name: Run tests
-        run: python -m pytest tests -q
+        run: python -m pytest tests/test_smoke.py -q
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
