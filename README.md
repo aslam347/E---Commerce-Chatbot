@@ -1,22 +1,20 @@
-# 💬 E-Commerce Chatbot (Gen AI RAG Project using Llama 3.3 + GROQ)
+# 🚀 Cloud Deployed Gen AI E-Commerce Chatbot with CI/CD Pipeline
 
-An intelligent **AI-powered chatbot for e-commerce platforms** that helps users search products, ask FAQs, and get instant responses using **LLM + RAG + SQL Database Querying**.
+An end-to-end **Production-Ready Generative AI E-Commerce Chatbot** built using **Llama 3.3, GROQ, RAG, ChromaDB, SQL Querying, Docker, GitHub Actions CI/CD, AWS ECR, and AWS EC2 Deployment**.
 
-This project demonstrates how Generative AI can be integrated into e-commerce websites to improve customer experience through smart automation.
-
----
-
-# 🌐 Live Demo App
-
-🚀 Try the chatbot here:
-
-👉 https://e---commerce-chatbot-mohamed-aslam.streamlit.app/
+This project demonstrates how modern AI applications are designed, containerized, tested, deployed, and automatically updated in cloud environments using real-world DevOps workflows.
 
 ---
 
-# 🎥 Project Explanation Video
+# 🌐 Live Demo
 
-Watch the complete Loom demo and explanation of this project:
+🚀 Live Application:
+
+👉 http://3.228.14.39:8501
+
+---
+
+# 🎥 Project Demo Video
 
 👉 https://www.loom.com/share/4c4b5e7447c540f695e395d0ff441f22
 
@@ -28,100 +26,152 @@ Watch the complete Loom demo and explanation of this project:
 
 ---
 
-# 📌 Project Overview
+# 🧠 Project Overview
 
-This chatbot currently supports **two main intents**:
+This AI-powered chatbot helps e-commerce customers:
 
-## ✅ FAQ Intent
+✅ Ask product-related questions  
+✅ Search products using natural language  
+✅ Get instant FAQ responses  
+✅ Query product database conversationally  
+✅ Receive AI-generated intelligent answers  
 
-Handles customer support questions like:
-
-- Return policy  
-- Refund process  
-- Payment methods  
-- Shipping details  
-- Promo code usage  
-- Damaged product help  
-
-## ✅ SQL Intent
-
-Handles product search requests directly from database:
-
-- Shoes under ₹2000  
-- Nike shoes below ₹3000  
-- Top-rated running shoes  
-- Puma shoes with discount  
-- Women sports shoes  
-- Cheapest branded shoes  
-
-The chatbot intelligently routes user queries using a semantic router and generates responses using:
+The application combines:
 
 - Retrieval-Augmented Generation (RAG)
-- SQLite product database querying
-- GROQ-hosted Llama 3.3 LLM
+- LLM-based SQL query generation
+- Semantic routing
+- Vector search
+- Cloud deployment
+- Docker containerization
+- Automated CI/CD pipeline
+
+---
+
+# 🏗️ End-to-End Cloud Architecture
+
+```text
+User
+  ↓
+Streamlit Frontend
+  ↓
+Semantic Router
+  ↓
+ ┌─────────────────────┬─────────────────────┐
+ │                     │                     │
+FAQ Intent         SQL Intent
+ │                     │
+ChromaDB RAG       SQL Query Generation
+ │                     │
+Llama 3.3 via GROQ SQLite Product Database
+ │                     │
+ └──────── Final AI Response ────────┘
+
+
+CI/CD FLOW
+
+Developer Pushes Code to GitHub
+                ↓
+GitHub Actions CI/CD Pipeline
+                ↓
+Run Automated Tests (Pytest)
+                ↓
+Build Docker Image
+                ↓
+Push Image to Docker Hub
+                ↓
+Push Image to AWS ECR
+                ↓
+GitHub Actions SSH into EC2
+                ↓
+EC2 Pulls Latest Image from ECR
+                ↓
+Run Updated Docker Container
+                ↓
+Application Auto Deployed on AWS Cloud
+```
+
+---
+
+# ☁️ Cloud & DevOps Highlights
+
+✅ Dockerized Gen AI Application  
+✅ GitHub Actions CI/CD Pipeline  
+✅ Automated Testing using Pytest  
+✅ Docker Hub Integration  
+✅ AWS ECR Container Registry  
+✅ AWS EC2 Cloud Deployment  
+✅ SSH-Based Automated Deployment  
+✅ Environment Variable Security using GitHub Secrets  
+✅ Real-world MLOps / DevOps Workflow  
+✅ Production-style Deployment Architecture  
+
+---
+
+# 🧠 Core Features
+
+## ✅ FAQ AI Assistant
+
+Supports intelligent customer support questions:
+
+- Return policy
+- Refund process
+- Payment methods
+- Shipping details
+- Promo code support
+- Order cancellation
+- Damaged product help
+
+---
+
+## ✅ AI Product Search Engine
+
+Supports natural language product search:
+
+- Nike shoes below ₹3000
+- Puma shoes with discount
+- Shoes under ₹2000
+- Cheapest running shoes
+- Top-rated sports shoes
+- Women sports shoes
 
 ---
 
 # 🧠 Tech Stack
 
-- Python  
-- Streamlit  
-- Groq API  
-- Llama 3.3  
-- SQLite  
-- ChromaDB  
-- Sentence Transformers  
-- Semantic Router  
-- Pandas  
-- SQLAlchemy  
-- Docker  
+## AI / ML
 
----
+- Llama 3.3
+- GROQ API
+- RAG
+- ChromaDB
+- Sentence Transformers
+- Semantic Router
 
-# 🚀 Key Features
+## Backend
 
-✅ Intelligent user query understanding  
-✅ Automatic intent detection  
-✅ FAQ chatbot with RAG pipeline  
-✅ Natural language product search  
-✅ Real-time SQL database querying  
-✅ Product links with price/rating/discount  
-✅ Fast LLM responses using GROQ  
-✅ Clean premium Streamlit UI  
-✅ Beginner-friendly Gen AI architecture  
-✅ Docker containerization support  
+- Python
+- SQLite
+- SQLAlchemy
+- Pandas
 
----
+## Frontend
 
-# 🧠 Supported Intents
+- Streamlit
 
-## 1️⃣ FAQ Intent
+## Cloud / DevOps
 
-Triggered when users ask policy or support questions.
+- Docker
+- Docker Hub
+- GitHub Actions
+- AWS EC2
+- AWS ECR
+- Linux
+- SSH Automation
 
-### Example Queries
+## Testing
 
-- Is online payment available?  
-- How can I get refund?  
-- What is return policy?  
-- Do you offer international shipping?  
-- How to use promo code?  
-- Can I cancel my order?  
-
----
-
-## 2️⃣ SQL Intent
-
-Triggered when users search products.
-
-### Example Queries
-
-- Show me Nike shoes below Rs. 3000  
-- Puma shoes with discount  
-- Shoes under Rs. 2000  
-- Top rated running shoes  
-- Women sports shoes  
-- Cheapest shoes available  
+- Pytest
 
 ---
 
@@ -139,27 +189,7 @@ Triggered when users search products.
 
 ---
 
-# 🏗️ Architecture Flow
-
-```text
-User Query
-   ↓
-Intent Detection (Semantic Router)
-   ↓
- ┌───────────────┬──────────────┐
- │               │              │
-FAQ Route      SQL Route
- │               │
-RAG Search     Generate SQL Query
- │               │
-LLM Answer     SQLite Database
- │               │
- └────── Final Chatbot Response ──────┘
-```
-
----
-
-# 📁 Folder Structure
+# 📁 Project Structure
 
 ```bash
 E-Commerce-RAG/
@@ -170,25 +200,28 @@ E-Commerce-RAG/
 │   ├── sql.py
 │   ├── router.py
 │   ├── style.css
-│   ├── db.sqlite
-│   └── .env
+│   └── db.sqlite
 │
 ├── resources/
 │   ├── faq_data.csv
 │   ├── product-ss.png
 │   ├── architecture-diagram.png
-│   ├── ecommerce_data_final.csv
-│   └── db.sqlite
+│   └── ecommerce_data_final.csv
 │
-├── Web - Scrapping/
-│   ├── csv_to_sqlite.py
-│   ├── flipkart_product_data.csv
-│   ├── duplicate_products.csv
-│   ├── unavailable_products.csv
-│   └── flipkart_data_extraction.ipynb
+├── tests/
+│   ├── conftest.py
+│   ├── test_faq.py
+│   ├── test_sql.py
+│   ├── test_router.py
+│   └── test_smoke.py
+│
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yml
 │
 ├── requirements.txt
 ├── Dockerfile
+├── pytest.ini
 ├── .dockerignore
 ├── .gitignore
 └── README.md
@@ -196,7 +229,7 @@ E-Commerce-RAG/
 
 ---
 
-# ⚙️ Installation & Run
+# ⚙️ Local Setup
 
 ## Clone Repository
 
@@ -204,7 +237,7 @@ E-Commerce-RAG/
 git clone https://github.com/aslam347/E-Commerce-RAG.git
 ```
 
-## Move Into Project
+## Move into Project
 
 ```bash
 cd E-Commerce-RAG
@@ -216,6 +249,12 @@ cd E-Commerce-RAG
 pip install -r requirements.txt
 ```
 
+## Run Tests
+
+```bash
+pytest -q
+```
+
 ## Run Application
 
 ```bash
@@ -224,26 +263,7 @@ streamlit run app/main.py
 
 ---
 
-# 📜 Requirements
-
-```txt
-streamlit==1.56.0
-chromadb==1.5.8
-protobuf==3.20.3
-sentence-transformers==5.4.1
-groq==1.2.0
-pandas==2.3.3
-python-dotenv==1.2.2
-sqlalchemy==2.0.49
-pandasql==0.7.3
-semantic-router==0.0.72
-```
-
----
-
-# 🐳 Docker Containerization
-
-This project is fully containerized using Docker.
+# 🐳 Docker Setup
 
 ## Build Docker Image
 
@@ -257,21 +277,70 @@ docker build -t ecommerce-rag .
 docker run --env-file app/.env -p 8501:8501 ecommerce-rag
 ```
 
-## Open in Browser
-
-```text
-http://localhost:8501
-```
-
 ---
 
 # 🐳 Docker Hub
 
-Pull and run directly from Docker Hub:
+## Pull from Docker Hub
 
 ```bash
 docker pull mohamedaslam2001/ecommerce-rag
+```
+
+## Run Container
+
+```bash
 docker run --env-file app/.env -p 8501:8501 mohamedaslam2001/ecommerce-rag
+```
+
+---
+
+# ☁️ AWS Deployment
+
+This project is deployed on AWS Cloud using:
+
+- AWS EC2
+- AWS ECR
+- GitHub Actions CI/CD
+
+## Deployment Workflow
+
+```text
+GitHub Push
+    ↓
+GitHub Actions
+    ↓
+Run Tests
+    ↓
+Build Docker Image
+    ↓
+Push to Docker Hub
+    ↓
+Push to AWS ECR
+    ↓
+SSH into EC2
+    ↓
+Pull Latest Image
+    ↓
+Run Updated Container
+```
+
+---
+
+# 🔐 GitHub Secrets Used
+
+```text
+DOCKERHUB_USERNAME
+DOCKERHUB_TOKEN
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_ACCOUNT_ID
+AWS_REGION
+EC2_HOST
+EC2_USER
+EC2_SSH_KEY
+GROQ_API_KEY
+GROQ_MODEL
 ```
 
 ---
@@ -287,77 +356,89 @@ GROQ_MODEL=llama-3.3-70b-versatile
 
 ---
 
-# 💡 Real Business Use Cases
+# 🧪 Automated Testing
 
-This project can be applied to multiple real-world business scenarios, including:
+This project includes CI/CD-integrated automated testing using Pytest.
 
-- ✅ E-commerce customer support automation  
-- ✅ AI shopping assistant  
-- ✅ Smart product recommendation engine  
-- ✅ FAQ resolution bot  
-- ✅ Order support chatbot  
-- ✅ Conversational commerce assistant  
-- ✅ AI product search engine  
-- ✅ Retail automation assistant  
+Test coverage includes:
+
+✅ FAQ flow  
+✅ SQL flow  
+✅ Semantic router  
+✅ Application smoke testing  
+
+Run locally:
+
+```bash
+pytest -q
+```
 
 ---
 
-# 🔥 Challenges Solved
+# 💡 Real-World Business Use Cases
 
-During development, this project involved solving several real-world engineering challenges such as:
+✅ E-commerce AI assistant  
+✅ Customer support automation  
+✅ AI shopping assistant  
+✅ Conversational commerce platform  
+✅ AI-powered FAQ system  
+✅ Intelligent product discovery  
+✅ Retail support chatbot  
 
-- Intent routing using semantic similarity  
-- SQL query generation using LLM  
-- Vector database integration with ChromaDB  
-- SQLite integration inside GenAI workflow  
-- Streamlit deployment optimization  
-- Docker containerization  
-- Environment variable management  
-- Dependency conflict handling  
+---
+
+# 🔥 Engineering Challenges Solved
+
+- Semantic intent routing
+- LLM-generated SQL queries
+- Vector database integration
+- ChromaDB RAG pipeline
+- SQLite integration with LLM workflow
+- Docker containerization
+- GitHub Actions CI/CD automation
+- AWS cloud deployment
+- Secure secret management
+- Production deployment troubleshooting
 
 ---
 
 # 📚 Key Learnings
 
-- Retrieval-Augmented Generation (RAG)  
-- LLM-based SQL generation  
-- Semantic Router implementation  
-- ChromaDB vector search  
-- SQLite database querying  
-- Prompt engineering  
-- Streamlit frontend development  
-- Dockerizing GenAI applications  
-- Production-ready AI architecture  
+- Retrieval-Augmented Generation (RAG)
+- Prompt Engineering
+- Semantic Routing
+- ChromaDB Vector Search
+- LLM-based SQL Generation
+- Streamlit Application Development
+- Docker & Containerization
+- CI/CD Pipeline Automation
+- AWS EC2 & ECR Deployment
+- DevOps for AI Applications
+- Production AI Deployment Architecture
 
 ---
 
 # 🙌 Author
 
-## Mohamed Aslam
+# Mohamed Aslam
 
 Passionate about:
 
-- Data Science  
-- Generative AI  
-- AI Agents  
-- Real-world AI products  
-- End-to-end AI deployment  
+- Generative AI
+- AI Engineering
+- AI Agents
+- MLOps
+- Cloud AI Deployment
+- Real-world AI Applications
 
 ---
 
-# ⭐ If You Like This Project
+# ⭐ Support
 
-If you found this project useful, please give this repository a **Star ⭐ on GitHub**.
+If you found this project useful, please give it a ⭐ on GitHub.
 
 ---
 
 # 📜 License
 
-Copyright (C) Codebasics Inc. All rights reserved.
-
-## Additional Terms
-
-This software is licensed under the **MIT License**. However:
-
-- Commercial use of this software is strictly prohibited without prior written permission from the author.  
-- Attribution must be given in all copies or substantial portions of the software.
+This project is licensed under the MIT License.
